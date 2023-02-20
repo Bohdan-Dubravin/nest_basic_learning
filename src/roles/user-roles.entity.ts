@@ -14,7 +14,7 @@ export class UsersRoles {
   roleId: string;
 
 
-  @ApiProperty({example: '2', description: 'users with role'})
+  @ApiProperty({example: '2', description: 'users id'})
   @Column()
   userId: number;
 }
