@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Roles } from 'src/roles/roles.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity()
 export class Users {
@@ -25,4 +26,11 @@ export class Users {
     nullable: true,
   })
   banReason: string;
+
+  @ManyToMany(
+    () =>  Roles, 
+    (roles)=> roles.users, 
+  )
+    roles: Roles[];
 }
+
