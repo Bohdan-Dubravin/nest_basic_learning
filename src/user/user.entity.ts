@@ -28,9 +28,24 @@ export class Users {
   banReason: string;
 
   @ManyToMany(
-    () =>  Roles, 
-    (roles)=> roles.users, 
-  )
+    () => Roles, 
+    role => role.users,
+    {cascade: true}
+    )
+    @JoinTable({
+      name: 'users_roles',
+      joinColumn: {
+        name: 'user_id',
+        referencedColumnName: 'id',
+      },
+      inverseJoinColumn: {
+        name: 'role_id',
+        referencedColumnName: 'id',
+      },
+    })
     roles: Roles[];
 }
+
+
+
 
