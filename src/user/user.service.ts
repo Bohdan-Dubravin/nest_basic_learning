@@ -19,7 +19,7 @@ export class UserService {
     newUser.email = user.email;
     newUser.password = user.password;
 
-    const role = await this.rolesService.getRoleByValue('USER');
+    const role = await this.rolesService.getRoleByValue('ADMIN');
 
     newUser.roles = [role];
 
