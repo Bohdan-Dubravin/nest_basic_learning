@@ -3,8 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Roles } from 'src/roles/roles.entity';
 import { RolesService } from 'src/roles/roles.service';
 import { Repository } from 'typeorm';
-import { UserDto } from './user.dto';
+import { UserDto } from './dto/user.dto';
 import { Users } from './user.entity';
+import { AddRoleDto } from './dto/addRoleDto';
+import { banUserDto } from './dto/banUser.dto';
 
 @Injectable()
 export class UserService {
@@ -32,5 +34,21 @@ export class UserService {
 
   async getUsersByEmail(email: string) {
     return await this.usersRepository.findOneBy({ email });
+  }
+
+  async addRole(dto: AddRoleDto) {
+    const user = await this.usersRepository.findOneBy({ id: dto.userId });
+    const role = await this.rolesService.getRoleByValue(dto.value);
+
+    if (role && user) {
+      await this.usersRepository.update(
+        { id: dto.userId },
+        { roles: [...user.roles, role] },
+      );
+    }
+  }
+
+  async banUser(dto: banUserDto) {
+    return;
   }
 }
